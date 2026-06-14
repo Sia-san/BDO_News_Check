@@ -2,6 +2,7 @@ name: BDO Notice Watcher
 
 on:
   workflow_dispatch:
+  push:
 
   schedule:
     - cron: "*/5 * * * *"
