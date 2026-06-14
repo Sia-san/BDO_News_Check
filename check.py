@@ -21,7 +21,7 @@ if article is None:
 board_no = article.get("data-boardno")
 link = article.get("href")
 
-print(article.prettify())
+title = article.select_one("strong.title span.line_clamp").get_text(strip=True)
 
 current = {
     "board_no": board_no,
