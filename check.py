@@ -21,6 +21,8 @@ if article is None:
 board_no = article.get("data-boardno")
 link = article.get("href")
 
+print(article.prettify())
+
 current = {
     "board_no": board_no,
     "link": link
