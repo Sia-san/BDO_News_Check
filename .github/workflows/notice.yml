@@ -20,17 +20,22 @@ jobs:
 
       - run: pip install requests beautifulsoup4
 
-      - name: Run
+      - name: Check Notice
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: python check.py
+
+      - name: Check Coupon
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_COUPON }}
+        run: python check_coupon.py
 
       - name: Save State
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
 
-          git add state.json
+          git add state.json state_coupon.json
 
           git diff --cached --quiet || (
             git commit -m "Update state"
