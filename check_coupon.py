@@ -1,10 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
-import hashlib
 import json
 import os
 
-URL = "https://www.jp.playblackdesert.com/ja-JP/News/Detail?groupContentNo=7077"
+URL = "https://www.jp.playblackdesert.com/ja-JP/News/Notice?boardType=1"
 
 headers = {
     "User-Agent": "Mozilla/5.0"
@@ -14,19 +13,27 @@ html = requests.get(URL, headers=headers, timeout=30).text
 
 soup = BeautifulSoup(html, "html.parser")
 
-content = soup.select_one(".fr-view")
+articles = soup.select("ul.thumb_nail_list li a")
 
-if content is None:
-    raise Exception("記事本文取得失敗")
+coupon_article = None
 
-text = content.get_text("\n", strip=True)
+for article in articles:
 
-current_hash = hashlib.sha256(
-    text.encode("utf-8")
-).hexdigest()
+    title = article.get_text(" ", strip=True)
+
+    if "クーポン" in title:
+        coupon_article = article
+        break
+
+if coupon_article is None:
+    raise Exception("クーポン記事が見つからない")
+
+board_no = coupon_article.get("data-boardno")
+link = coupon_article.get("href")
+title = coupon_article.get_text(" ", strip=True)
 
 current = {
-    "hash": current_hash
+    "board_no": board_no
 }
 
 STATE_FILE = "state_coupon.json"
@@ -37,14 +44,15 @@ if os.path.exists(STATE_FILE):
 else:
     old = {}
 
-if old.get("hash") != current_hash:
+if old.get("board_no") != board_no:
 
     requests.post(
         os.environ["DISCORD_WEBHOOK"],
         json={
             "content":
-            "🎟️ クーポンページ更新検知\n\n"
-            f"{URL}"
+            f"🎟️ 新しいクーポン記事を検知\n"
+            f"【{title}】\n\n"
+            f"{link}"
         }
     )
 
