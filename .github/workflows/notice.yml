@@ -25,10 +25,10 @@ jobs:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: python check.py
 
-      - name: Check Coupon
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_COUPON }}
-        run: python check_coupon.py
+      ##- name: Check Coupon
+      ##  env:
+      ##    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK_COUPON }}
+      ## run: python check_coupon.py
 
       - name: Save State
         run: |
