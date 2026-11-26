@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import json
 import os
 
-URL = "https://www.jp.playblackdesert.com/ja-JP/News/Notice?boardType=2"
+URL = "https://blackdesert.pearlabyss.com/JP/ja-JP/News/Notice?_categoryNo=2"
 
 headers = {
     "User-Agent": "Mozilla/5.0"
