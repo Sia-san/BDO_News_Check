@@ -7,7 +7,7 @@ from urllib.parse import urljoin, urlparse, parse_qs
 
 
 # 黒い砂漠公式お知らせ一覧
-URL = "https://www.jp.playblackdesert.com/ja-JP/News/Notice?Page=1&boardType=2&searchText=&searchType="
+URL = "https://www.jp.playblackdesert.com/ja-jp/News/Notice?Page=1&boardType=2&searchText=&searchType="
 
 headers = {
     "User-Agent": "Mozilla/5.0"
