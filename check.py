@@ -21,6 +21,16 @@ response = requests.get(
 )
 
 response.raise_for_status()
+print("指定URL:", URL)
+print("取得URL:", response.url)
+
+print(
+    "リダイレクト履歴:",
+    [
+        (r.status_code, r.url, r.headers.get("Location"))
+        for r in response.history
+    ]
+)
 
 soup = BeautifulSoup(response.text, "html.parser")
 
